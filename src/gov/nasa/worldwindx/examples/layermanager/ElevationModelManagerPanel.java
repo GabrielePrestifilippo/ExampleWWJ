@@ -29,7 +29,6 @@ public class ElevationModelManagerPanel extends JPanel
     protected JPanel modelNamesPanel;
     protected List<ElevationModelPanel> modelPanels = new ArrayList<ElevationModelPanel>();
 
-
     public ElevationModelManagerPanel(final WorldWindow wwd)
     {
         super(new BorderLayout(10, 10));
@@ -40,7 +39,7 @@ public class ElevationModelManagerPanel extends JPanel
         // Add the panel to a titled panel.
         JPanel titlePanel = new JPanel(new GridLayout(0, 1, 0, 10));
         titlePanel.setBorder(
-            new CompoundBorder(BorderFactory.createEmptyBorder(9, 9, 9, 9), new TitledBorder("Elevations")));
+            new CompoundBorder(BorderFactory.createEmptyBorder(9, 9, 9, 9), new TitledBorder("Default Elevations")));
         titlePanel.setToolTipText("Elevation models to use");
         titlePanel.add(this.modelNamesPanel);
         this.add(titlePanel, BorderLayout.CENTER);

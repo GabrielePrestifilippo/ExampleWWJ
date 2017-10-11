@@ -227,7 +227,7 @@ public class DemoWWJ
                 e.printStackTrace();
             }
         }
-        protected final Dimension wcsPanelSize = new Dimension(400, 600);
+
         protected JTabbedPane tabbedPane;
         protected int previousTabIndex;
         public AppFrame()
@@ -235,58 +235,8 @@ public class DemoWWJ
 
             this.tabbedPane = new JTabbedPane();
 
-            this.tabbedPane.add(new JPanel());
-            this.tabbedPane.setTitleAt(0, "+");
-            this.tabbedPane.addChangeListener(new ChangeListener()
-            {
-                public void stateChanged(ChangeEvent changeEvent)
-                {
-                    if (tabbedPane.getSelectedIndex() != 0)
-                    {
-                        previousTabIndex = tabbedPane.getSelectedIndex();
-                        return;
-                    }
-
-                    String server = JOptionPane.showInputDialog("Enter WCS server URL");
-                    if (server == null || server.length() < 1)
-                    {
-                        tabbedPane.setSelectedIndex(previousTabIndex);
-                        return;
-                    }
-
-                    // Respond by adding a new WMSLayerPanel to the tabbed pane.
-                    if (addTab(tabbedPane.getTabCount(), server.trim()) != null)
-                        tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
-                }
-            });
             this.initialize(true, true, false);
 
-            /**
-             * ADD SERVERS
-             */
-            final String[] servers = new String[]
-                {
-                    "http://localhost:8080/geoserver/ows?service=WCS&version=2.0.1&request=GetCapabilities",
-                };
-
-            for (int i = 0; i < servers.length; i++)
-            {
-                this.addTab(i + 1, servers[i]); // i+1 to place all server tabs to the right of the Add Server tab
-            }
-
-            // Display the first server pane by default.
-            this.tabbedPane.setSelectedIndex(this.tabbedPane.getTabCount() > 0 ? 1 : 0);
-            this.previousTabIndex = this.tabbedPane.getSelectedIndex();
-
-            // Add the tabbed pane to a frame separate from the world window.
-            JFrame controlFrame = new JFrame();
-            controlFrame.getContentPane().add(tabbedPane);
-            controlFrame.pack();
-            controlFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            controlFrame.setVisible(true);
-            /**
-             * ADD SERVER
-             */
             this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 
             // Import the elevations on a thread other than the event-dispatch thread to avoid freezing the UI.
@@ -294,7 +244,7 @@ public class DemoWWJ
             {
                 public void run()
                 {
-                    // importElevations();
+                    //importElevations();
                     importImagery();
 
                     // Restore the cursor.
@@ -332,8 +282,28 @@ public class DemoWWJ
                 this.controlPanel = new JPanel(new BorderLayout(10, 10));
                 this.layerPanel = new LayerPanel(this.getWwd());
                 this.controlPanel.add(this.layerPanel, BorderLayout.CENTER);
-                this.controlPanel.add(new FlatWorldPanel(this.getWwd()), BorderLayout.NORTH);
+
+
+                /**
+                 * ADD SERVERS
+                 */
+                final String[] servers = new String[]
+                    {
+                        //"https://worldwind26.arc.nasa.gov/wcs",
+                        //"http://localhost:8080/geoserver/ows?service=WCS&version=2.0.1&request=GetCapabilities",
+                    };
+
+                for (int i = 0; i < servers.length; i++)
+                {
+                    this.addTab(i + 0, servers[i]); // i+1 to place all server tabs to the right of the Add Server tab
+                }
+
+                // Display the first server pane by default.
+                this.tabbedPane.setSelectedIndex(0);
+                this.previousTabIndex = this.tabbedPane.getSelectedIndex();
+                this.controlPanel.add(this.tabbedPane, BorderLayout.WEST);
                 this.getContentPane().add(this.controlPanel, BorderLayout.WEST);
+
             }
 
             if (includeStatsPanel || System.getProperty("gov.nasa.worldwind.showStatistics") != null)
@@ -344,7 +314,8 @@ public class DemoWWJ
 
             // Create and install the view controls layer and register a controller for it with the World Window.
             ViewControlsLayer viewControlsLayer = new ViewControlsLayer();
-            insertBeforeCompass(getWwd(), viewControlsLayer);
+            LayerList layers = getWwd().getModel().getLayers();
+            layers.add(viewControlsLayer);
             this.getWwd().addSelectListener(new ViewControlsSelectListener(this.getWwd(), viewControlsLayer));
 
             // Register a rendering exception listener that's notified when exceptions occur during rendering.
@@ -431,14 +402,14 @@ public class DemoWWJ
 
         public WCSCoveragePanel addTab(int position, String server)
         {
-            final Dimension wcsPanelSize = new Dimension(400, 600);
+            final Dimension wcsPanelSize = new Dimension(200, 400);
             // Add a server to the tabbed dialog.
             try
             {
                 WCSCoveragePanel coveragePanel = new WCSCoveragePanel(DemoWWJ.AppFrame.this.getWwd(), server,
                     wcsPanelSize);
                 this.tabbedPane.add(coveragePanel, BorderLayout.CENTER);
-                this.tabbedPane.setTitleAt(position, "Geoserver Elevation");
+                this.tabbedPane.setTitleAt(position, "Geoserver Elevations");
 
                 return coveragePanel;
             }

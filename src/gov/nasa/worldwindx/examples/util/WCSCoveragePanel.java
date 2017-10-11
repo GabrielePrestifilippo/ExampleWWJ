@@ -153,11 +153,11 @@ public class WCSCoveragePanel extends JPanel
         scrollPane.setPreferredSize(size);
 
         // Add the scroll bar and name panel to a titled panel that will resize with the main window.
-        JPanel westPanel = new JPanel(new GridLayout(0, 1, 0, 10));
+        JPanel westPanel = new JPanel(new GridLayout(0, 1, 0, 1));
         westPanel.setBorder(
-            new CompoundBorder(BorderFactory.createEmptyBorder(9, 9, 9, 9), new TitledBorder("Coverages")));
+            new CompoundBorder(BorderFactory.createEmptyBorder(9, 9, 9, 9), new TitledBorder("Elevation Coverage")));
         westPanel.add(scrollPane);
-        this.add(westPanel, BorderLayout.CENTER);
+        this.add(westPanel, BorderLayout.NORTH);
 
         this.revalidate();
     }
