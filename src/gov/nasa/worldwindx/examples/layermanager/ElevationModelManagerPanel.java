@@ -39,7 +39,7 @@ public class ElevationModelManagerPanel extends JPanel
         // Add the panel to a titled panel.
         JPanel titlePanel = new JPanel(new GridLayout(0, 1, 0, 10));
         titlePanel.setBorder(
-            new CompoundBorder(BorderFactory.createEmptyBorder(9, 9, 9, 9), new TitledBorder("Default Elevations")));
+            new CompoundBorder(BorderFactory.createEmptyBorder(9, 9, 9, 9), new TitledBorder("Local Elevations")));
         titlePanel.setToolTipText("Elevation models to use");
         titlePanel.add(this.modelNamesPanel);
         this.add(titlePanel, BorderLayout.CENTER);

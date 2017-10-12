@@ -8,23 +8,20 @@ package example;
 import gov.nasa.worldwind.*;
 import gov.nasa.worldwind.avlist.*;
 import gov.nasa.worldwind.awt.WorldWindowGLCanvas;
-import gov.nasa.worldwind.data.*;
+
 import gov.nasa.worldwind.event.*;
 import gov.nasa.worldwind.exception.WWAbsentRequirementException;
 import gov.nasa.worldwind.geom.*;
 import gov.nasa.worldwind.globes.*;
 import gov.nasa.worldwind.layers.*;
 
-import gov.nasa.worldwind.render.SurfaceImage;
 import gov.nasa.worldwind.terrain.*;
 import gov.nasa.worldwind.util.*;
-import gov.nasa.worldwindx.examples.dataimport.*;
+
 import gov.nasa.worldwindx.examples.util.*;
 
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.*;
-import java.awt.image.*;
 import java.io.File;
 import java.net.URISyntaxException;
 
@@ -103,10 +100,9 @@ public class DemoWWJ
         // The Imagery to import
         protected static final String IMAGE_PATH = "gov/nasa/worldwindx/examples/data/craterlake-imagery-30m.tif";
 
+
         protected void importElevations()
         {
-
-          /*
             try
             {
                 // Download the data and save it in a temp file.
@@ -116,12 +112,14 @@ public class DemoWWJ
                 final LocalElevationModel elevationModel = new LocalElevationModel();
                 elevationModel.addElevations(sourceFile);
 
+
                 SwingUtilities.invokeLater(new Runnable()
                 {
                     public void run()
                     {
                         // Get the WorldWindow's current elevation model.
                         Globe globe = DemoWWJ.AppFrame.this.getWwd().getModel().getGlobe();
+
                         ElevationModel currentElevationModel = globe.getElevationModel();
 
                         // Add the new elevation model to the globe.
@@ -130,19 +128,21 @@ public class DemoWWJ
                         else
                             globe.setElevationModel(elevationModel);
 
+
                         // Set the view to look at the imported elevations, although they might be hard to detect. To
                         // make them easier to detect, replace the globe's CompoundElevationModel with the new elevation
                         // model rather than adding it.
                         Sector modelSector = elevationModel.getSector();
                         ExampleUtil.goTo(getWwd(), modelSector);
                     }
+
                 });
             }
             catch (Exception e)
             {
                 e.printStackTrace();
             }
-            */
+            layerPanel.updateElevations(this.getWwd());
         }
 
         protected JTabbedPane tabbedPane;
@@ -163,8 +163,6 @@ public class DemoWWJ
                 public void run()
                 {
                     importElevations();
-
-                     // Restore the cursor.
                     setCursor(Cursor.getDefaultCursor());
                 }
             });
@@ -350,6 +348,7 @@ public class DemoWWJ
 
     static
     {
+
         Configuration.setValue(AVKey.INITIAL_LATITUDE, 42.92);
         Configuration.setValue(AVKey.INITIAL_LONGITUDE, -122.10);
         Configuration.setValue(AVKey.INITIAL_ALTITUDE, 25000);
