@@ -94,12 +94,12 @@ public class DemoWWJ
         protected LayerPanel layerPanel;
         protected StatisticsPanel statsPanel;
 
+        /**
+         * Importing local elevation - START
+         */
         // The elevation to import
         protected static final String ELEVATIONS_PATH
             = "gov/nasa/worldwindx/examples/data/craterlake-elev-16bit-30m.tif";
-        // The Imagery to import
-        protected static final String IMAGE_PATH = "gov/nasa/worldwindx/examples/data/craterlake-imagery-30m.tif";
-
 
         protected void importElevations()
         {
@@ -143,6 +143,9 @@ public class DemoWWJ
                 e.printStackTrace();
             }
             layerPanel.updateElevations(this.getWwd());
+            /**
+             * Importing local elevation - END
+             */
         }
 
         protected JTabbedPane tabbedPane;
@@ -197,7 +200,7 @@ public class DemoWWJ
                 this.controlPanel.add(this.layerPanel, BorderLayout.CENTER);
 
                 /**
-                 * ADD SERVERS
+                 * ADD WCS SERVERS - START
                  */
                 final String[] servers = new String[]
                     {
@@ -215,6 +218,9 @@ public class DemoWWJ
                 this.controlPanel.add(this.tabbedPane, BorderLayout.WEST);
                 this.getContentPane().add(this.controlPanel, BorderLayout.WEST);
             }
+            /**
+             * ADD WCS SERVERS - END
+             */
 
             if (includeStatsPanel || System.getProperty("gov.nasa.worldwind.showStatistics") != null)
             {
