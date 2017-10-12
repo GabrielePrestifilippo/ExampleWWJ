@@ -21,7 +21,7 @@ public class WCSElevations extends ApplicationTemplate
 {
     protected static final String[] servers = new String[]
         {
-            "https://worldwind26.arc.nasa.gov/wcs",
+            "http://localhost:8080/geoserver/ows?service=WCS&version=2.0.1&request=GetCapabilities",
         };
 
     public static class AppFrame extends ApplicationTemplate.AppFrame

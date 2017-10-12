@@ -12,14 +12,14 @@
 <!--See the javadoc for the Configuration class for details-->
 <LayerList>
 
-
     <Layer className="gov.nasa.worldwind.layers.Earth.BMNGOneImage">
         <Property name="MinActiveAltitude" value="3e6"/>
     </Layer>
-
-    <Layer href="config/Earth/LandsatI3WMSLayer.xml" actuate="onLoad"/>
+    <Layer actuate="onLoad" href="config/Earth/BMNGWMSLayer2.xml"/>
+    <!--<Layer href="config/Earth/LandsatI3WMSLayer.xml" actuate="onLoad"/>-->
     <Layer className="gov.nasa.worldwind.layers.WorldMapLayer"/>
     <Layer className="gov.nasa.worldwind.layers.ScalebarLayer"/>
-	<Layer href="config/Earth/LocalLayers.xml" actuate="onLoad"/>
+    <Layer href="config/Earth/LocalLayers.xml" actuate="onLoad"/>
+    <Layer href="config/Earth/Contours.xml" actuate="onLoad"/>
     <Layer className="gov.nasa.worldwind.layers.CompassLayer"/>
 </LayerList>
